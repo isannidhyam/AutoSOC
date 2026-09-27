@@ -1,0 +1,70 @@
+{
+  "nodes": {
+    "AUTH-SRV-AD": {
+      "name": "Active Directory Core Controller",
+      "criticality": "CATASTROPHIC",
+      "criticality_weight": 10,
+      "downtime_cost_per_hr": 50000,
+      "depends_on": [],
+      "description": "Enterprise Authentication & Domain Controller"
+    },
+    "DB-PAYROLL-01": {
+      "name": "Payroll Database Server",
+      "criticality": "HIGH",
+      "criticality_weight": 8,
+      "downtime_cost_per_hr": 18500,
+      "depends_on": [
+        "AUTH-SRV-AD"
+      ],
+      "description": "Sensitive Employee Compensation Database"
+    },
+    "DB-CUSTOMER-02": {
+      "name": "Customer Production Database",
+      "criticality": "HIGH",
+      "criticality_weight": 8,
+      "downtime_cost_per_hr": 25000,
+      "depends_on": [
+        "AUTH-SRV-AD"
+      ],
+      "description": "Primary Customer Relational Database Cluster"
+    },
+    "WEB-PROD-CLUSTER": {
+      "name": "Production Web App Cluster",
+      "criticality": "MAJOR",
+      "criticality_weight": 7,
+      "downtime_cost_per_hr": 12000,
+      "depends_on": [
+        "DB-CUSTOMER-02",
+        "AUTH-SRV-AD"
+      ],
+      "description": "Public Customer E-Commerce Facing Frontend"
+    },
+    "S3-CUSTOMER-BACKUP": {
+      "name": "Customer Backup Object Storage",
+      "criticality": "MODERATE",
+      "criticality_weight": 5,
+      "downtime_cost_per_hr": 5000,
+      "depends_on": [],
+      "description": "Encrypted Offsite Storage Backups"
+    },
+    "FIN-APP-SERVER": {
+      "name": "Finance Enterprise Application",
+      "criticality": "HIGH",
+      "criticality_weight": 8,
+      "downtime_cost_per_hr": 15000,
+      "depends_on": [
+        "DB-PAYROLL-01",
+        "AUTH-SRV-AD"
+      ],
+      "description": "Internal Enterprise ERP & Payroll App"
+    },
+    "DEV-SANDBOX-09": {
+      "name": "Developer Sandbox Instance",
+      "criticality": "LOW",
+      "criticality_weight": 2,
+      "downtime_cost_per_hr": 0,
+      "depends_on": [],
+      "description": "Isolated Testing Environment"
+    }
+  }
+}
